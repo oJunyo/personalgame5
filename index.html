@@ -1,0 +1,414 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>石头剪刀布</title>
+<style>
+	*{
+		margin:0;
+		text-align: center;
+	}
+	.bground{
+		border:2px solid black;
+		background-color:#eeeeee;
+		border-radius: 45px;
+		width:50%;
+		height:620px;
+		margin:0 auto;
+		padding:0;
+		position:relative;
+	}
+	.topword{
+		font-size:35px;
+		font-weight:bold;
+		letter-spacing:10px;
+		text-align:center;
+		margin-top:10px;
+	}
+	img{
+		width:100%;
+		height:auto;
+	}
+	div.zone{
+		width:22%;
+		height:auto;
+		position:absolute;
+	}
+	.btnn{
+		width:6%;
+		height: auto;
+		position: absolute;
+		right: 20px;
+	}
+</style>
+</head>
+
+<body>
+<div class="bground">
+	<p class="topword">石头剪刀布</p><br>
+	<div style="height:420px">
+		<!--下面四个是游戏中的四只手-->
+		<div class="zone" style="left:100px"><img class="pic" id="左上" src="问号.png" alt="stone"></div>
+		<div class="zone" style="right:100px"><img class="pic" id="右上" onClick="change0()" src="石头玩家上.png" alt="stone"></div>
+		<div class="zone" style="left:100px;top:300px"><img class="pic" id="左下" src="问号.png" alt="stone"></div>
+		<div class="zone" style="right:100px;top:300px"><img class="pic" onClick="change1()" id="右下" src="石头玩家下.png" alt="stone"></div>
+		<!--下面是右上角的三个按钮-->
+		<div class="btnn" style="top:70px">
+				<img id="greenstone0" src="石头logo.png" alt="stonelogo" onClick="green0()" style="border:3px solid black;border-radius:1000px"></div>
+		<div class="btnn" style="top:130px;">
+				<img  id="bluescissor0" src="剪刀logo.png" alt="scissorlogo" onClick="blue0()"></div>
+		<div class="btnn" style="top:190px">
+				<img id="pinkcloth0" src="布logo.png" alt="clothlogo" onClick="pink0()"></div>
+		<!--下面是右下角的三个按钮-->
+		<div  class="btnn" style="top:310px">
+				<img id="greenstone1" src="石头logo.png" alt="stonelogo" onClick="green1()" style="border:3px solid black;border-radius:1000px"></div>
+		<div class="btnn" style="top:370px;">
+				<img id="bluescissor1" src="剪刀logo.png" alt="scissorlogo" onClick="blue1()"></div>
+		<div class="btnn" style="top:430px">
+				<img id="pinkcloth1" src="布logo.png" alt="clothlogo" onClick="pink1()"></div>
+		
+		<div style="position: absolute;width:12%;height:auto;top:260px;left:345px"><img id="vs" src="vs.png" alt="VS"></div>
+	</div>
+	<img id="wenzi" src="win.png" alt="lose" style="width:40%;position: absolute;left:230px;visibility:hidden">
+	<div id="reminder" style="position:absolute;left:310px;"></div>
+	<br><br>
+	 <!--下面是最底下的三个按钮-->
+	<img class="bottombtn" id="CheckButton" name="btn" src="对手情况.png" alt="checkcomputerresult" style="width:18%;border:0px solid black;border-radius: 20px;box-shadow: -2px -2px black" onClick="computerresult()" onMouseDown="changeshadow0()" onMouseUp="returnshadow0()">
+	<img class="bottombtn" name="btn" src="重新开始.png" alt="restart" style="width:18%;margin-left:45px;border:0px solid black;border-radius: 20px;box-shadow: -2px -2px black" onClick="javascript:location.reload();" onMouseDown="changeshadow1()" onMouseUp="returnshadow1()">
+	
+</div>
+<div style="font-size:13px;line-height: 20px;margin-top:5px">游戏说明：请玩家严格按照以下步骤进行游戏<br>
+	步骤一：选择最右边那列您想出的拳，上面的拳对应右手，下面的拳对应左手。<br>
+	步骤二：点击“对手情况”查看电脑系统自动生成的出拳结果。<br>
+	步骤三：在2秒内点击右手或左手，选择您想参与对决的手。</div>
+</body>
+<script>
+	var CheckButton=document.getElementById("CheckButton");
+
+	var Green0=document.getElementById("greenstone0");
+	var Blue0=document.getElementById("bluescissor0");
+	var Pink0=document.getElementById("pinkcloth0");
+
+	var Green1=document.getElementById("greenstone1");
+	var Blue1=document.getElementById("bluescissor1");
+	var Pink1=document.getElementById("pinkcloth1");
+
+	var playeron=document.getElementById("右上");
+	var playerdown=document.getElementById("右下");
+	
+
+	var playerLeftHand=1;
+	var playerRightHand=1;
+	function green0(){
+		playeron.src="石头玩家上.png";
+		Green0.style.border="3px solid black";
+		Green0.style.borderRadius="1000px";
+		Pink0.style="none";
+		Blue0.style="none";
+		playerRightHand=1;
+	}
+	function blue0(){
+		playeron.src="剪刀玩家上.png";
+		Blue0.style.border="3px solid black";
+		Blue0.style.borderRadius="1000px";
+		Green0.style="none";
+		Pink0.style="none";
+		playerRightHand=2;
+	}
+	function pink0(){
+		playeron.src="布玩家上.png";
+		Pink0.style.border="3px solid black";
+		Pink0.style.borderRadius="1000px";
+		Green0.style="none";
+		Blue0.style="none";
+		playerRightHand=3;
+	}
+
+
+	function green1(){
+		playerdown.src="石头玩家下.png";
+		Green1.style.border="3px solid black";
+		Green1.style.borderRadius="1000px";
+		Pink1.style="none";
+		Blue1.style="none";
+		playerLeftHand=1;
+	}
+	function blue1(){
+		playerdown.src="剪刀玩家下.png";
+		Blue1.style.border="3px solid black";
+		Blue1.style.borderRadius="1000px";
+		Green1.style="none";
+		Pink1.style="none";
+		playerLeftHand=2;
+	}
+	function pink1(){
+		playerdown.src="布玩家下.png";
+		Pink1.style.border="3px solid black";
+		Pink1.style.borderRadius="1000px";
+		Green1.style="none";
+		Blue1.style="none";
+		playerLeftHand=3;
+	}
+	
+	
+	//对手随机生成石头剪刀布
+	var computers=["石头","剪刀","布"];
+	var index0=Math.floor(Math.random()*3);
+	var index1=Math.floor(Math.random()*3);
+	var con=computers[index0];
+	var cdown=computers[index1];
+
+	var computeron=document.getElementById("左上");
+	var computerdown=document.getElementById("左下");
+	var judgeit=document.getElementById("wenzi");
+	var Reminder=document.getElementById("reminder");
+	var timer;
+	var a=3;
+
+function computerresult(){
+	timer=setInterval(resetnumber,1000);//弹出倒计时提示
+	function resetnumber(){
+		a--;
+		Reminder.innerHTML="您还剩"+a+"秒做出选择";
+		if(a==0){
+			
+			Reminder.innerHTML="您已超时,请重新开始";
+			clearInterval(timer);
+			playeron.onclick=null;
+			playerdown.onclick=null;
+			CheckButton.onclick=null;
+		}
+	}
+
+	CheckButton.src="对手结果.png";
+	
+	if(con=="石头"){
+		if(cdown=="石头"){
+			computeron.src="石头电脑上.png";
+			computerdown.src="石头电脑下.png";
+		}else if(cdown=="剪刀"){
+			computeron.src="石头电脑上.png";
+			computerdown.src="剪刀电脑下.png";
+		}else{
+			computeron.src="石头电脑上.png";
+			computerdown.src="布电脑下.png";
+		}
+		
+	}else if(con=="剪刀"){
+		if(cdown=="石头"){
+			computeron.src="剪刀电脑上.png";
+			computerdown.src="石头电脑下.png";
+		}else if(cdown=="剪刀"){
+			computeron.src="剪刀电脑上.png";
+			computerdown.src="剪刀电脑下.png";
+		}else{
+			computeron.src="剪刀电脑上.png";
+			computerdown.src="布电脑下.png";
+		}
+	}else{
+		if(cdown=="石头"){
+			computeron.src="布电脑上.png";
+			computerdown.src="石头电脑下.png";
+		}else if(cdown=="剪刀"){
+			computeron.src="布电脑上.png";
+			computerdown.src="剪刀电脑下.png";
+		}else{
+			computeron.src="布电脑上.png";
+			computerdown.src="布电脑下.png";
+		}
+	}
+		//点击“对手情况”按钮，移除所有彩色圆圈的点击事件，防止玩家看到对手的情况后进行改动。
+		Green0.onclick=null;
+		Blue0.onclick=null;
+		Pink0.onclick=null;
+		Green1.onclick=null;
+		Blue1.onclick=null;
+		Pink1.onclick=null;
+	
+}
+	
+	var choose1=["左上1","左下1"];
+	var b=Math.floor(Math.random()*2);
+	var show=choose1[b];
+	
+
+	//玩家选择了上面的手与电脑对决
+	function change0(){
+		clearInterval(timer);
+		Reminder.style.display="none";//触发点击事件，消除计时器
+		
+		playerdown.onclick=null;
+		playeron.style.border="2px solid black";
+		playeron.style.borderRadius="35px";
+		playeron.style.backgroundColor="#f6cd61";
+		if(show=="左上1"){
+			computeron.style.border="2px solid black";
+			computeron.style.borderRadius="35px";
+			computeron.style.backgroundColor="#f6cd61";
+			if(con=="石头"){
+				if(playerRightHand==1){
+					judgeit.src="same.png";
+					judgeit.style.visibility="visible";
+			    }else if(playerRightHand==2){
+				    judgeit.src="lose.png";
+					judgeit.style.visibility="visible";
+			    }else{
+				    judgeit.src="win.png";
+					judgeit.style.visibility="visible";
+			    }
+		    }else if(con=="剪刀"){
+				if(playerRightHand==1){
+					judgeit.src="win.png";
+					judgeit.style.visibility="visible";
+				}else if(playerRightHand==2){
+					judgeit.src="same.png";
+
+					judgeit.style.visibility="visible";
+				}else{
+					judgeit.src="lose.png";
+					judgeit.style.visibility="visible";
+				}
+			}else{
+				if(playerRightHand==1){
+					judgeit.src="lose.png";
+					judgeit.style.visibility="visible";
+				}else if(playerRightHand==2){
+					judgeit.src="win.png";
+					judgeit.style.visibility="visible";
+				}else{
+					judgeit.src="same.png";
+					judgeit.style.visibility="visible";
+				}
+				
+			}
+	    }else{
+			computerdown.style.border="2px solid black";
+			computerdown.style.borderRadius="35px";
+			computerdown.style.backgroundColor="#f6cd61"
+			if(cdown=="石头"){
+				if(playerRightHand==1){
+					judgeit.src="same.png";
+					judgeit.style.visibility="visible";
+				}else if(playerRightHand==2){
+					judgeit.src="lose.png";
+					judgeit.style.visibility="visible";
+				}else{
+					judgeit.src="win.png";
+					judgeit.style.visibility="visible";
+				}
+			}else if(cdown=="剪刀"){
+				if(playerRightHand==1){
+					judgeit.src="win.png";
+					judgeit.style.visibility="visible";
+				}else if(playerRightHand==2){
+					judgeit.src="same.png";
+					judgeit.style.visibility="visible";
+				}else{
+					judgeit.src="lose.png";
+					judgeit.style.visibility="visible";
+				}
+			}else{
+				if(playerRightHand==1){
+					judgeit.src="lose.png";
+					judgeit.style.visibility="visible";
+				}else if(playerRightHand==2){
+					judgeit.src="win.png";
+					judgeit.style.visibility="visible";
+				}else{
+					judgeit.src="same.png";
+					judgeit.style.visibility="visible";
+				}
+			}
+		}
+	} 
+
+		//玩家选择了下面的手与电脑对决
+	function change1(){
+		clearInterval(timer);
+		Reminder.style.display="none";
+		
+		judgeit.style.visibility="visible";
+		playerdown.style.backgroundColor="#f6cd61";
+		playerdown.style.border="2px solid black";
+		playerdown.style.borderRadius="35px";
+		playeron.style="none";
+		playeron.onclick=null;
+		if(show=="左上1"){
+			computeron.style.backgroundColor="#f6cd61";
+			computeron.style.border="2px solid black";
+			computeron.style.borderRadius="35px";
+			if(con=="石头"){
+				if(playerLeftHand==1){
+					judgeit.src="same.png";
+				}else if(playerLeftHand==2){
+					judgeit.src="lose.png";
+				}else{
+					judgeit.src="win.png";
+				}
+		    }else if(con=="剪刀"){
+				if(playerLeftHand==1){
+					judgeit.src="win.png";
+				}else if(playerLeftHand==2){
+					judgeit.src="same.png";
+				}else{
+					judgeit.src="lose.png";
+				}
+			}else{
+				if(playerLeftHand==1){
+					judgeit.src="lose.png";
+				}else if(playerLeftHand==2){
+					judgeit.src="win.png";
+				}else{
+					judgeit.src="same.png";
+				}
+			}
+		}else{
+			computerdown.style.backgroundColor="#f6cd61";
+			computerdown.style.border="2px solid black";
+			computerdown.style.borderRadius="35px";
+			if(cdown=="石头"){
+				if(playerLeftHand==1){
+					judgeit.src="same.png";
+				}else if(playerLeftHand==2){
+					judgeit.src="lose.png";
+				}else{
+					judgeit.src="win.png";
+				}
+
+		    }else if(cdown=="剪刀"){
+				if(playerLeftHand==1){
+					judgeit.src="win.png";
+				}else if(playerLeftHand==2){
+					judgeit.src="same.png";
+				}else{
+					judgeit.src="lose.png";
+				}
+			}else{
+				if(playerLeftHand==1){
+					judgeit.src="lose.png";
+				}else if(playerLeftHand==2){
+					judgeit.src="win.png";
+				}else{
+					judgeit.src="same.png";
+				}
+			}
+		}
+	}
+	
+	//改变底下两个按钮的阴影方向
+	var obtn=document.getElementsByName("btn");
+	function changeshadow0(){
+		obtn[0].style.boxShadow="2px 2px black";
+	}
+	function returnshadow0(){
+		obtn[0].style.boxShadow="-2px -2px black";
+	}
+	function changeshadow1(){
+		obtn[1].style.boxShadow="2px 2px black";
+	}
+	function returnshadow1(){
+		obtn[1].style.boxShadow="-2px -2px black";
+	}
+	
+</script>
+</html>
